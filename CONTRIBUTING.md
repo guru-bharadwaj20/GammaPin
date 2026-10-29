@@ -86,7 +86,7 @@ From 17 Oct 2026 the live steps above are dropped (see the scope change at the t
 | G0.10 | Novelty check: SSRN, arXiv, GitHub for "Nifty gamma exposure" | ✅ |
 | G0.11 | ~~Upstox account, Plus plan (check price), API app~~ Dropped: no live feed (scope change) | ➖ |
 | G0.12 | ~~Node C: Ubuntu 24.04, chrony from `ops/chrony.conf`, inbox for A/B segments~~ Dropped: no capture nodes | ➖ |
-| G0.13 | Add Vivian as collaborator, branch protection on `main`: Vivian added (write access); branch protection still open | ❌ |
+| G0.13 | Add Vivian as collaborator, branch protection on `main`: Vivian added (write access); `main` blocks force pushes and deletion | ✅ |
 
 **🚩 CP-G0:** contracts merged (the Upstox token step is dropped). ✅
 
