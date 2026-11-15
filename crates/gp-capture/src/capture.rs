@@ -97,8 +97,43 @@ mod tests {
     use crate::mock::{Fault, MockConfig, MockFeed};
     use gp_feed::synth::{MarketConfig, universe};
     use gp_feed::{Date, Selection, parse_request};
-    use gp_log::{RecordKind, WriterConfig, read_log};
+    use gp_log::{RecordKind, Tail, WriterConfig, read_log};
     use std::time::Duration;
+
+    /// Polls the live log until `pred` holds over every record kind written so far.
+    async fn wait_for(
+        tail: &mut Tail,
+        seen: &mut Vec<RecordKind>,
+        want: &str,
+        pred: impl Fn(&[RecordKind]) -> bool,
+    ) {
+        let deadline = tokio::time::Instant::now() + Duration::from_secs(10);
+        loop {
+            if let Ok((recs, _)) = tail.poll_skipping_torn() {
+                seen.extend(recs.into_iter().map(|r| r.kind));
+            }
+            if pred(seen) {
+                return;
+            }
+            assert!(
+                tokio::time::Instant::now() < deadline,
+                "timed out waiting for {want}; log so far: {seen:?}"
+            );
+            tokio::time::sleep(Duration::from_millis(20)).await;
+        }
+    }
+
+    fn count(kinds: &[RecordKind], want: RecordKind) -> usize {
+        kinds.iter().filter(|&&k| k == want).count()
+    }
+
+    /// A raw frame was written after the last `want` record.
+    fn frames_after_last(kinds: &[RecordKind], want: RecordKind) -> bool {
+        kinds
+            .iter()
+            .rposition(|&k| k == want)
+            .is_some_and(|i| kinds[i..].contains(&RecordKind::RawFrame))
+    }
 
     #[tokio::test]
     async fn survives_cuts_and_resubscribes() {
@@ -135,16 +170,34 @@ mod tests {
             rec.close().unwrap();
             s
         });
-        let pause = Duration::from_millis(300);
-        tokio::time::sleep(pause).await;
+        // Drive the scenario by what the recorder has written, not by wall-clock pauses: a slow
+        // runner then only makes the test slower, never changes the sequence it asserts.
+        use RecordKind::{GapEnd, GapStart, RawFrame};
+        let (mut tail, mut seen) = (Tail::new(dir.path()), Vec::new());
+        wait_for(&mut tail, &mut seen, "first frames", |k| {
+            count(k, RawFrame) >= 5
+        })
+        .await;
         feed.cut(Fault::Drop);
-        tokio::time::sleep(pause).await;
+        wait_for(&mut tail, &mut seen, "gap 1 start", |k| {
+            count(k, GapStart) == 1
+        })
+        .await;
         feed.restore();
-        tokio::time::sleep(pause).await;
+        wait_for(&mut tail, &mut seen, "gap 1 end and frames", |k| {
+            count(k, GapEnd) == 1 && frames_after_last(k, GapEnd)
+        })
+        .await;
         feed.cut(Fault::Silence);
-        tokio::time::sleep(Duration::from_millis(500)).await;
+        wait_for(&mut tail, &mut seen, "gap 2 start (stall)", |k| {
+            count(k, GapStart) == 2
+        })
+        .await;
         feed.restore();
-        tokio::time::sleep(pause).await;
+        wait_for(&mut tail, &mut seen, "gap 2 end and frames", |k| {
+            count(k, GapEnd) == 2 && frames_after_last(k, GapEnd)
+        })
+        .await;
         tx.send(true).unwrap();
         let summary = task.await.unwrap();
 
