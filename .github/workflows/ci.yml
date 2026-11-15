@@ -26,7 +26,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: Swatinem/rust-cache@v2
-      - run: cargo test --workspace --locked -- --ignored
+      # the latency bar (V6.1) is a release-build figure; a debug build sits a few ms over it
+      - run: cargo test --workspace --locked --release -- --ignored
 
   python:
     runs-on: ubuntu-24.04
