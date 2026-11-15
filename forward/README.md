@@ -29,6 +29,10 @@ Run from `research/`. The eve is the last trading day before expiry.
 5. Post the printed hash somewhere public that records the time, as a second witness.
 6. Never edit or replace a published `{expiry}.json`.
 
+### Unattended run (Windows)
+
+`scripts/forward_eod.ps1` does steps 1 to 4 (`-Stage publish`) and the scoring below (`-Stage score`) and logs to `%LOCALAPPDATA%\GammaPinorward_eod.log`. It refuses to publish when the prediction's `eve` is not the expected eve (NSE late, or a holiday), and never overwrites an existing `{expiry}.json`. `scripts/forward_eod_schedule.ps1 -Expiry YYYY-MM-DD` registers three one-shot Task Scheduler jobs for it: fetch on the eve at 20:30, publish on expiry day at 07:30, score the next day at 20:00 (local time, IST). The machine has to be on, or allowed to wake. Step 5 (a second public witness for the hash) stays manual.
+
 ## Publish procedure, 14:00 snapshot design (not used: needs the live monitor)
 
 1. Around 14:00 IST, save one C2 snapshot from the live monitor (`/ws`) to a file.
