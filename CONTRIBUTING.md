@@ -59,7 +59,7 @@ Start on a Wednesday so day 7 and day 14 are Nifty expiry Tuesdays. See [docs/CA
 | 10–11 | | G6 tick validation and model finalization | V6 hardening |
 | 12 Sun | | G7 freeze, test set run once (done early: Sat 17 Oct, day 4) | V6 hardening, code freeze |
 | 13 Mon | | G5.3 connect dashboard to `/ws` | V6 full dry run |
-| 14 Tue | ⚡ Nifty expiry 2 | G7 live forward test | V7 capture |
+| 14 Tue | ⚡ Nifty expiry 2 (missed; replaced by Tue 17 Nov, see PREREGISTRATION.md Deviations) | G7 live forward test | V7 capture |
 | After | | G7 results write-up | V7 demo replay, systems write-up |
 
 From 17 Oct 2026 the live steps above are dropped (see the scope change at the top). Track V's systems were finished on the mock feed.
@@ -177,9 +177,9 @@ From 17 Oct 2026 the live steps above are dropped (see the scope change at the t
 |---|---|---|
 | G7.1 | Run H1 on the test set, **once**, commit the outputs; H2 not tested (no data). [Results](docs/RESULTS_H1_TEST.md) | ✅ |
 | G7.2 | `forward_test.py`: write the 14:00 prediction with a SHA-256, and score it after settlement | ✅ |
-| G7.3 | Publish the end-of-day prediction (`predict-eod`, eve-close bhavcopy) for expiry 2, before 15:30 IST on expiry day ([forward/README.md](forward/README.md)) | ❌ |
-| G7.4 | Score the forward test against the settlement | ❌ |
-| G7.5 | Results write-up with confidence intervals, including null results. [Draft](docs/RESULTS.md); forward-test row after G7.4 | ⏳ |
+| G7.3 | Publish the end-of-day prediction (`predict-eod`, eve-close bhavcopy) for the second forward expiry before 15:30 IST on expiry day ([forward/README.md](forward/README.md)). Expiry 2 (Tue 27 Oct) was missed (PREREGISTRATION.md, Deviations, 15 Nov); replaced by Tue 17 Nov 2026, run by `scripts/forward_eod.ps1` on 17 Nov 08:30 IST | ⏳ |
+| G7.4 | Score the forward test against the settlement: expiry 1 scored (G7.7); 17 Nov scored by `scripts/forward_eod.ps1 -Stage score` on 18 Nov | ⏳ |
+| G7.5 | Results write-up with confidence intervals, including null results: [docs/RESULTS.md](docs/RESULTS.md), final apart from the 17 Nov forward-test row, filled by G7.4 | ✅ |
 | G7.6 | Extra forward test on expiry 1 (Mon 19 Oct): publish `predict-eod` from the 16 Oct bhavcopy before the open. [forward/2026-10-19.json](forward/2026-10-19.json) | ✅ |
 | G7.7 | Score the expiry-1 forward test against the settlement | ✅ |
 

@@ -221,10 +221,10 @@ Status marks: ✅ done · ⏳ in progress · ➖ dropped.
 
 | Track | Scope | Status |
 |---|---|:---:|
-| G0–G4 | Contracts, pricing core, historical data, GEX engine, research pipelines | ✅ (G0.13 branch protection open) |
+| G0–G4 | Contracts, pricing core, historical data, GEX engine, research pipelines | ✅ |
 | G5 | Dashboard on `gp-monitor`'s live `/ws`, fed by the mock market | ✅ |
 | G6 | Validation and model freeze (`freeze-v1`) | ✅ |
-| G7 | Test set, forward predictions, scoring, final write-up | ✅ test set · ✅ expiry-1 scored · ⏳ expiry-2 and final write-up |
+| G7 | Test set, forward predictions, scoring, final write-up | ✅ test set · ✅ expiry-1 scored · ✅ write-up · ⏳ 17 Nov forward expiry (27 Oct missed) |
 | V0–V3 | Capture foundation, merge, replay | ✅ on the mock feed · ➖ node, install and live-feed steps |
 | V5–V6 | Live engine, monitor server, hardening | ✅ on the mock feed |
 | V4, V7 | Expiry capture, chaos test, systems write-up | ➖ live capture (needs a KYC'd feed) · ✅ chaos test, simulated · ✅ write-up |
@@ -245,10 +245,12 @@ Status marks: ✅ done · ⏳ in progress · ➖ dropped.
 | Expiry | Published | Pin S0 | Pin S1 | Pin S2 | Max pain | Nearest 100 | No move | Settlement |
 |---|---|---:|---:|---:|---:|---:|---:|---|
 | 19 Oct 2026 | 18 Oct, `c5827627…` | 23,200 | 23,000 | 23,000 | 23,050 | 23,100 | 23,103.5 | 22,888.95 |
-| 27 Oct 2026 | pending | | | | | | | |
+| 27 Oct 2026 | missed, not published | | | | | | | 22,749.75 |
+| 17 Nov 2026 | due 17 Nov before 09:15 IST | | | | | | | |
 
 Two forward expiries cannot confirm or reject H1. They show the pipeline running
-live and in public, without hindsight.
+live and in public, without hindsight. The 27 Oct prediction was never published
+and is not made after the fact; 17 Nov replaces it (PREREGISTRATION.md, Deviations).
 
 ### What CI proves on every push
 
