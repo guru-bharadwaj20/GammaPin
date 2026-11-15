@@ -2,7 +2,7 @@
 
 This directory holds the H1 forward test, published before settlement so that nobody can adjust it after the fact.
 
-The primary design is end-of-day (`predict-eod`): the prediction is made from the expiry eve's NSE bhavcopy, the same design H1 was tested on, and needs no broker account. The 14:00 snapshot design (`predict`) needs a live feed for the monitor, which needs a KYC'd broker account; live capture was dropped (17 Oct 2026, [CONTRIBUTING.md](../CONTRIBUTING.md#scope-change-17-oct-2026-no-live-capture)).
+The primary design is end-of-day (`predict-eod`): the prediction is made from the expiry eve's NSE bhavcopy, the same design H1 was tested on, and needs no broker account. The 14:00 snapshot design (`predict`) needs a live feed for the monitor, which needs a KYC'd broker account; live capture was dropped (17 Oct 2026).
 
 | File | Written by | Contents |
 |---|---|---|
@@ -28,10 +28,6 @@ Run from `research/`. The eve is the last trading day before expiry.
 4. Run the `git add`, `git commit` and `git push` commands it prints, **before 15:30 IST**. The pushed commit on GitHub is the public timestamp.
 5. Post the printed hash somewhere public that records the time, as a second witness.
 6. Never edit or replace a published `{expiry}.json`.
-
-### Unattended run (Windows)
-
-`scripts/forward_eod.ps1` does steps 1 to 4 (`-Stage publish`) and the scoring below (`-Stage score`) and logs to `%LOCALAPPDATA%\GammaPin\forward_eod.log`. It refuses to publish when the prediction's `eve` is not the expected eve (NSE late, or a holiday), and never overwrites an existing `{expiry}.json`. `scripts/forward_eod_schedule.ps1 -Expiry YYYY-MM-DD` registers three one-shot Task Scheduler jobs for it: fetch on the eve at 20:30, publish on expiry day at 07:30, score the next day at 20:00 (local time, IST). The machine has to be on, or allowed to wake. Step 5 (a second public witness for the hash) stays manual.
 
 ## Publish procedure, 14:00 snapshot design (not used: needs the live monitor)
 

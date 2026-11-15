@@ -2,7 +2,7 @@
 
 All times IST.
 
-Live capture was dropped on 17 Oct 2026 ([CONTRIBUTING.md](../CONTRIBUTING.md#scope-change-17-oct-2026-no-live-capture)): every live NSE feed needs a broker account with SEBI KYC. There is no daily capture, token or node routine.
+Live capture was dropped on 17 Oct 2026: every live NSE feed needs a broker account with SEBI KYC. There is no daily capture, token or node routine.
 
 The capture, merge, replay and monitor binaries are built and tested on a synthetic feed ([docs/SYSTEMS.md](../docs/SYSTEMS.md)). [Systems](#systems-built-not-deployed) below shows how to run them, on the mock feed today or on Upstox with an account. The systemd units and `chrony.conf` in this directory are for that deployment.
 

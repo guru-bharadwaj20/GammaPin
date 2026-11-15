@@ -1,6 +1,6 @@
 # Systems: capture, merge, replay and monitor
 
-Track V of [CONTRIBUTING.md](../CONTRIBUTING.md) built a redundant capture pipeline for the Upstox Market Data Feed V3: two nodes record every WebSocket frame, a merge turns both logs into one de-duplicated record, and a monitor serves the live (or replayed) GEX chain to the dashboard.
+Track V built a redundant capture pipeline for the Upstox Market Data Feed V3: two nodes record every WebSocket frame, a merge turns both logs into one de-duplicated record, and a monitor serves the live (or replayed) GEX chain to the dashboard.
 
 Live capture was dropped on 17 Oct 2026 because every NSE feed needs a broker account with KYC. Everything below was therefore built and measured against **`gp-mockfeed`**, a synthetic Nifty market spoken over the same V3 protobuf protocol. No real tick was ever captured, and no test uses real market data. What is real: the protocol code, the failure handling, the file formats and the timings on this hardware.
 

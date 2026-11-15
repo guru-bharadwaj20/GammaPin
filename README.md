@@ -215,7 +215,7 @@ download them from NSE.
 
 ## Project status
 
-The research question is answered on history; the forward test is live. Track V
+The research question is answered on history and the forward test is closed. Track V
 finished every system on the mock feed after the scope change.
 Status marks: ✅ done · ⏳ in progress · ➖ dropped.
 
@@ -224,7 +224,7 @@ Status marks: ✅ done · ⏳ in progress · ➖ dropped.
 | G0–G4 | Contracts, pricing core, historical data, GEX engine, research pipelines | ✅ |
 | G5 | Dashboard on `gp-monitor`'s live `/ws`, fed by the mock market | ✅ |
 | G6 | Validation and model freeze (`freeze-v1`) | ✅ |
-| G7 | Test set, forward predictions, scoring, final write-up | ✅ test set · ✅ expiry-1 scored · ✅ write-up · ⏳ 17 Nov forward expiry (27 Oct missed) |
+| G7 | Test set, forward predictions, scoring, final write-up | ✅ test set · ✅ expiry-1 scored · ✅ write-up · ➖ second forward expiry (27 Oct missed, not re-run) |
 | V0–V3 | Capture foundation, merge, replay | ✅ on the mock feed · ➖ node, install and live-feed steps |
 | V5–V6 | Live engine, monitor server, hardening | ✅ on the mock feed |
 | V4, V7 | Expiry capture, chaos test, systems write-up | ➖ live capture (needs a KYC'd feed) · ✅ chaos test, simulated · ✅ write-up |
@@ -246,11 +246,11 @@ Status marks: ✅ done · ⏳ in progress · ➖ dropped.
 |---|---|---:|---:|---:|---:|---:|---:|---|
 | 19 Oct 2026 | 18 Oct, `c5827627…` | 23,200 | 23,000 | 23,000 | 23,050 | 23,100 | 23,103.5 | 22,888.95 |
 | 27 Oct 2026 | missed, not published | | | | | | | 22,749.75 |
-| 17 Nov 2026 | due 17 Nov before 09:15 IST | | | | | | | |
 
-Two forward expiries cannot confirm or reject H1. They show the pipeline running
+One forward expiry cannot confirm or reject H1. It shows the pipeline running
 live and in public, without hindsight. The 27 Oct prediction was never published
-and is not made after the fact; 17 Nov replaces it (PREREGISTRATION.md, Deviations).
+and is not made after the fact; the forward test closes with expiry 1
+(PREREGISTRATION.md, Deviations).
 
 ### What CI proves on every push
 
@@ -318,7 +318,6 @@ replay number is measured on the synthetic feed and labelled as such.
 | *What do the crates exchange?* | [docs/CONTRACTS.md](docs/CONTRACTS.md) |
 | *Which models were frozen?* | [docs/MODELS_FINAL.md](docs/MODELS_FINAL.md) |
 | *How do I run expiry day?* | [ops/RUNBOOK.md](ops/RUNBOOK.md) · [forward/README.md](forward/README.md) |
-| *Who owns which task?* | [CONTRIBUTING.md](CONTRIBUTING.md) |
 
 ---
 
@@ -329,8 +328,7 @@ replay number is measured on the synthetic feed and labelled as such.
 | **Guru R Bharadwaj** | Track G — pricing core, historical data, GEX engine, research pipelines, dashboard, write-up |
 | **Vivian Sobers** | Track V — capture, merge, replay, the monitor server and the capture nodes |
 
-The two tracks meet at the contracts in [docs/CONTRACTS.md](docs/CONTRACTS.md);
-see [the split](CONTRIBUTING.md#how-the-split-works).
+The two tracks meet at the contracts in [docs/CONTRACTS.md](docs/CONTRACTS.md).
 
 ---
 
