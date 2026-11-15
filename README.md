@@ -1,5 +1,13 @@
 # GammaPin
 
+<p align="center">
+  <a href="GammaPin%20Demo.mp4">
+    <img src="docs/GammaPin%20Demo%20thumbnail.png" alt="Watch the GammaPin demo video" width="720">
+  </a>
+  <br>
+  <sub>▶ <b><a href="GammaPin%20Demo.mp4">Watch the GammaPin demo</a></b> (1 min 30 s): the dashboard live on gp-monitor's /ws from the mock feed, a capture node cut and brought back, the merge, replay hash and replay at 10x, then the README quick start, forward test and CI rust job re-run on a fresh clone</sub>
+</p>
+
 **As far as we found, the first open, pre-registered test of whether gamma exposure predicts Nifty expiry-day moves — on free public data.**
 
 [![Study](https://img.shields.io/badge/Study-Pre--registered%20%C2%B7%20prereg--v1-6A1B9A?style=for-the-badge&labelColor=AB47BC)](PREREGISTRATION.md)
