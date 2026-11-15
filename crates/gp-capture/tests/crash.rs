@@ -70,7 +70,18 @@ async fn sigkill_mid_write_recovers() {
     let mut prev_segments = 0;
     for round in 0..3 {
         let mut child = spawn_capture(&config);
-        tokio::time::sleep(Duration::from_millis(1_500)).await;
+        // Kill once the run has rotated into a fresh segment. Waiting on the rotation rather
+        // than a fixed pause keeps the kill mid-write on a slow runner too.
+        let want = (prev_segments + 1).max(2);
+        let deadline = tokio::time::Instant::now() + Duration::from_secs(30);
+        loop {
+            let n = list_segments(&logs).map(|s| s.len()).unwrap_or(0);
+            if n >= want || tokio::time::Instant::now() >= deadline {
+                break;
+            }
+            tokio::time::sleep(Duration::from_millis(50)).await;
+        }
+        tokio::time::sleep(Duration::from_millis(300)).await; // keep writing into the new segment
         child.kill().unwrap(); // SIGKILL: no flush, no close
         child.wait().unwrap();
 
